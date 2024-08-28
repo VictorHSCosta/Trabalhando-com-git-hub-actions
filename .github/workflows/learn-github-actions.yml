@@ -1,13 +1,43 @@
+#se esse nome nao for dado acontece que o nome do arquivo sera o nome do workflow
+
 name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+
+#podemos definir o on onde as acoes que nos configurarmos serao executadas
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  check-bats-version:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: "20"
-      - run: npm install -g bats
-      - run: bats -v
+          node-version: "22"
+
+      - name: Cache pnpm dependencies
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 8
+          run_install: true
+          cache-dependencies: true
+
+      - name: Install dependencias
+        run: |
+          pnpm install
+          pnpm run build
+
+        #pnpm test nao consegui usar o jtest com o pnpm
+        #pnpm run db:seed caso esteja trabalhando com banco de dados
+        #db:push": "prisma db push",
+
+#precisamos atualizar o node para fazer os textes
+
