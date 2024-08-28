@@ -22,13 +22,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "22"
-
-      - name: Cache pnpm dependencies
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: 8
-          run_install: true
-          cache-dependencies: true
+          
       - name: Install pnpm
         run: npm install -g pnpm
 
