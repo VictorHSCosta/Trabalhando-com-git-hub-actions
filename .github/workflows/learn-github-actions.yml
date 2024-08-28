@@ -29,6 +29,8 @@ jobs:
           version: 8
           run_install: true
           cache-dependencies: true
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencias
         run: |
